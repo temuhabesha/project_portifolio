@@ -42,7 +42,9 @@ exports.login = async (req, res) => {
       { id: user._id, role: user.role },
       process.env.JWT_SECRET
     );
+const message = "login successfully";
     res.json({
+      msg:message,
       token,
       user: {
         id: user._id,
