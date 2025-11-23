@@ -2,23 +2,30 @@ const Project = require("../models/Project");
 
 exports.createProject = async (req, res) => {
   try {
-    const { title, description, price, imageBase64 } = req.body;
+    const { title, description, price } = req.body;
     const developerId = req.user.id;
-    if (!title || !description || price == null)
+
+    if (!title || !description || !price) {
       return res.status(400).json({ message: "Missing fields" });
+    }
+
+    const screenshots = req.files.map((file) => file.filename);
+
     const project = await Project.create({
       developerId,
       title,
       description,
       price,
-      imageBase64,
+      screenshots,
     });
-    res.json(project);
+
+    res.status(201).json({ message: "Project created", project });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 exports.getAll = async (req, res) => {
   try {

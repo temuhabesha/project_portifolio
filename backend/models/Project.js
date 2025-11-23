@@ -7,12 +7,13 @@ const projectSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    price: { type: Number, required: true },
-    imageBase64: { type: String }, // store single screenshot as base64
+    title: String,
+    description: String,
+    price: Number,
+    screenshots: [String],
   },
   { timestamps: true }
 );
+
 
 module.exports = mongoose.model("Project", projectSchema);
